@@ -24,6 +24,10 @@ int dataPins[8];
 #define CLK 3
 #define RW 4
 
+#define DB1 5
+#define DB2 6
+#define DB3 7
+
 void pulse(){
     unsigned int address = 0;
     for(int i=0; i<=15; i++){  // Read address pins
@@ -40,8 +44,8 @@ void pulse(){
         data = (data << 1) + inbit;
     }
 
-    char converted[15];
-    sprintf(converted, "    %04x  %c  %02x", address, digitalRead(RW) ? 'r' : 'W', data);
+    char converted[50];
+    sprintf(converted, "    %04x  %c  %02x    DB1:%c DB2:%c DB3:%c", address, digitalRead(RW) ? 'r' : 'W', data, digitalRead(DB1) ? 'H' : 'l', digitalRead(DB2) ? 'H' : 'l', digitalRead(DB3) ? 'H' : 'l');
     Serial.print(converted);
     Serial.println();
 }
@@ -61,6 +65,9 @@ void setup() {
     
     pinMode(CLK, INPUT);
     pinMode(RW, INPUT);
+    pinMode(DB1, INPUT);
+    pinMode(DB2, INPUT);
+    pinMode(DB3, INPUT);
 
     attachInterrupt(digitalPinToInterrupt(CLK), pulse, RISING);
 }
