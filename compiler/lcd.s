@@ -12,13 +12,13 @@ RS = %00100000
 
 ; Data section
 
-; Commands:
+; LCD startup commands:
 ; Function set: 8-bit mode, 2 lines, 5x8 font
 ; Display control: display on, cursor on, blinking on
 ; Entry mode: increment character position, do not shift screen
 ; Clear display
 ; Null byte
-to_send: .db %00111000,%00001111,%00000110,%00000001,0
+startup_cmds: .db %00111000,%00001111,%00000110,%00000001,0
 ; String to send to the display
 to_print: .asciiz "Beep, boop! (2)"
 
@@ -33,7 +33,7 @@ setup:
 
     ldx #0
 instr_loop:        ; Loop to send the instructions found in the data section
-    lda to_send,x
+    lda startup_cmds,x
     beq print_setup
     jsr send_instruction
     inx
