@@ -55,6 +55,9 @@ before_loop:
 loop:
     jmp loop
 
+
+; Subroutines
+
 wait_for_lcd:
     pha
     lda #%00000000 ; Set all pins on port B to input
